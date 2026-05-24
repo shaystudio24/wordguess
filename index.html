@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WordGuess</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #fff9fb;
+    }
+    .top-area {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1.75rem;
+      min-height: 90px;
+    }
+    #title-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      text-align: center;
+    }
+    h1.game-title {
+      font-size: 28px;
+      font-weight: 500;
+      color: #b5437a;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+    .prompt {
+      font-size: 15px;
+      color: #c27a8e;
+      text-align: center;
+      max-width: 380px;
+      line-height: 1.6;
+    }
+    .envelope-wrap {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      animation: fadeSlideIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    .envelope-wrap.show { display: flex; }
+    @keyframes fadeSlideIn {
+      0%{transform:scale(0.7) translateY(10px);opacity:0} 100%{transform:scale(1) translateY(0);opacity:1}
+    }
+    .open-label { font-size: 13px; font-weight: 500; color: #b5437a; letter-spacing: 1px; }
+    .envelope-btn {
+      background: none; border: none; cursor: pointer; padding: 0;
+      display: block; transition: transform 0.15s;
+    }
+    .envelope-btn:hover { transform: scale(1.06); }
+    .envelope-btn:active { transform: scale(0.97); }
+    .grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.75rem; }
+    .row { display: flex; gap: 8px; align-items: center; }
+    .tile {
+      width: 58px; height: 58px; border-radius: 10px;
+      border: 2px solid #e8b4c8; background: #fff5f8;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; font-weight: 500; color: #b5437a;
+      transition: border-color 0.2s, background 0.2s;
+      position: relative;
+    }
+    .tile.locked { background: #eeeceb; border-color: #ccc; color: #ccc; }
+    .tile.revealed { background: #f9d0e0; border-color: #d4778f; color: #7a1a3d; }
+    .tile.given { background: #f7b8d0; border-color: #c96086; color: #7a1a3d; font-weight: 700; }
+    .tile.active { border-color: #c96086; background: #fff0f5; box-shadow: 0 0 0 3px #f5c6d8; }
+    .tile.art-done { background: #fce4ef; border: 2.5px dashed #c96086; color: #7a1a3d; }
+    .tile.art-done .heart-badge { display: flex; }
+    .heart-badge {
+      display: none; position: absolute;
+      top: -9px; right: -7px;
+      width: 16px; height: 16px;
+      align-items: center; justify-content: center;
+    }
+    .tile.shake { animation: shake 0.4s ease; }
+    @keyframes shake {
+      0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)}
+    }
+    .tile.pop-in { animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes popIn {
+      0%{transform:scale(0.5);opacity:0.3} 100%{transform:scale(1);opacity:1}
+    }
+    .heart-pop { animation: heartPop 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards; }
+    @keyframes heartPop {
+      0%{transform:scale(0);opacity:0} 70%{transform:scale(1.3);opacity:1} 100%{transform:scale(1);opacity:1}
+    }
+    .keyboard { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+    .kb-row { display: flex; gap: 6px; }
+    .key {
+      width: 38px; height: 48px; border-radius: 8px;
+      font-size: 15px; font-weight: 500; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      user-select: none; transition: transform 0.1s;
+      border: 1.5px solid #e2a0ba; background: #fff0f6; color: #b5437a;
+    }
+    .key:hover { background: #fad4e5; transform: scale(1.07); }
+    .key:active { transform: scale(0.96); }
+    .key.tried { border: 1.5px solid #999 !important; background: #b0adab !important; color: #4a4745 !important; }
+    .key.tried:hover { background: #9e9b99 !important; transform: scale(1.07); }
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(180,40,90,0.18);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.show { display: flex; }
+    .banner-box {
+      background: #fff8fb; border-radius: 24px;
+      padding: 2.5rem 3rem; text-align: center;
+      border: 2px solid #e8a0c0; max-width: 340px;
+      animation: bannerIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+      position: relative; z-index: 2;
+    }
+    @keyframes bannerIn {
+      0%{transform:scale(0.5) translateY(60px);opacity:0} 100%{transform:scale(1) translateY(0);opacity:1}
+    }
+    .cake-svg { width: 110px; height: 110px; margin: 0 auto 1rem; display: block; }
+    .banner-title { font-size: 24px; font-weight: 500; color: #b5437a; margin-bottom: 0.75rem; }
+    .banner-sub { font-size: 15px; color: #c27a8e; line-height: 1.8; }
+    .banner-sub .heart { color: #e879a8; }
+    .close-btn {
+      margin-top: 1.25rem; padding: 8px 28px; border-radius: 20px;
+      border: 1.5px solid #e8a0c0; background: #fff; color: #b5437a; font-size: 14px; cursor: pointer;
+    }
+    .close-btn:hover { background: #fad4e5; }
+    .confetti-wrap { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1000; }
+    .confetti-piece { position: absolute; opacity: 0; animation: fall linear forwards; }
+    @keyframes fall {
+      0%{transform:translateY(-20px) rotate(0deg);opacity:1} 100%{transform:translateY(110vh) rotate(720deg);opacity:0.2}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-area">
+    <div id="title-area">
+      <h1 class="game-title">WordGuess</h1>
+      <p class="prompt">Guess one letter at a time to reveal today's words. Unlimited tries — give it a go!</p>
+    </div>
+    <div class="envelope-wrap" id="envelope-wrap">
+      <span class="open-label">open your letter</span>
+      <button class="envelope-btn" id="envelope-btn" aria-label="Open your letter">
+        <svg width="160" height="110" viewBox="0 0 160 110" xmlns="http://www.w3.org/2000/svg">
+          <rect x="4" y="20" width="152" height="86" rx="10" fill="#fce4ef" stroke="#d4778f" stroke-width="2"/>
+          <path d="M4 30 L80 72 L156 30" stroke="#d4778f" stroke-width="2" fill="none"/>
+          <path d="M4 20 L80 58 L156 20" fill="#f7b8d0" stroke="#d4778f" stroke-width="1.5"/>
+          <path d="M4 20 Q80 -10 156 20 L80 58 Z" fill="#f9d0e0" stroke="#d4778f" stroke-width="1.5"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+  <div class="keyboard" id="keyboard"></div>
+
+  <div class="confetti-wrap" id="confetti-wrap"></div>
+
+  <div class="modal-overlay" id="modal">
+    <div class="banner-box">
+      <svg class="cake-svg" viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
+        <rect x="15" y="62" width="80" height="34" rx="8" fill="#f9a8c9"/>
+        <rect x="20" y="50" width="70" height="18" rx="7" fill="#f7c5d8"/>
+        <rect x="26" y="40" width="58" height="14" rx="6" fill="#f9d0e2"/>
+        <ellipse cx="35" cy="62" rx="10" ry="5" fill="#fff0f6"/>
+        <ellipse cx="55" cy="62" rx="10" ry="5" fill="#ffd6ea"/>
+        <ellipse cx="75" cy="62" rx="10" ry="5" fill="#fff0f6"/>
+        <rect x="34" y="34" width="4" height="10" rx="2" fill="#fcd34d"/>
+        <rect x="53" y="34" width="4" height="10" rx="2" fill="#fcd34d"/>
+        <rect x="72" y="34" width="4" height="10" rx="2" fill="#fcd34d"/>
+        <ellipse cx="36" cy="32" rx="3" ry="5" fill="#f97316" opacity="0.85"/>
+        <ellipse cx="55" cy="32" rx="3" ry="5" fill="#f97316" opacity="0.85"/>
+        <ellipse cx="74" cy="32" rx="3" ry="5" fill="#f97316" opacity="0.85"/>
+        <path d="M25 68 Q30 64 35 68 Q40 72 45 68 Q50 64 55 68 Q60 72 65 68 Q70 64 75 68 Q80 72 85 68" stroke="#fff" stroke-width="2" fill="none" opacity="0.7"/>
+        <text x="55" y="84" text-anchor="middle" font-size="11" fill="#b5437a" font-weight="500">Happy Birthday</text>
+      </svg>
+      <div class="banner-title">Happy Birthday,<br>Baby Tood Tood</div>
+      <div class="banner-sub">
+        Hope your day is as wonderful<br>
+        as you are.<br><br>
+        Love you naka <span class="heart">&#10084;</span>
+      </div>
+      <button class="close-btn" onclick="document.getElementById('modal').classList.remove('show')">Close</button>
+    </div>
+  </div>
+
+  <script>
+    const WORDS = ["HAPPY","BIRTH","DAYMY","HEART"];
+    const KB_ROWS = [
+      ["Q","W","E","R","T","Y","U","I","O","P"],
+      ["A","S","D","F","G","H","J","K","L"],
+      ["Z","X","C","V","B","N","M"]
+    ];
+    const ART_TILES = { 3: [2, 3, 4] };
+
+    let currentRow = 0;
+    let currentCol = 1;
+    let done = false;
+    let triedLetters = new Set();
+
+    function isArtTile(ri, ci) {
+      return ART_TILES[ri] && ART_TILES[ri].includes(ci);
+    }
+
+    function heartSVG() {
+      return '<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" class="heart-pop"><path d="M8 13.5C8 13.5 1.5 9 1.5 5a3.5 3.5 0 0 1 6.5-1.8A3.5 3.5 0 0 1 14.5 5c0 4-6.5 8.5-6.5 8.5z" fill="#e879a8"/></svg>';
+    }
+
+    function buildGrid() {
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      WORDS.forEach((word, ri) => {
+        const row = document.createElement('div');
+        row.className = 'row';
+        word.split('').forEach((letter, ci) => {
+          const tile = document.createElement('div');
+          tile.className = 'tile';
+          tile.id = 'tile-' + ri + '-' + ci;
+          const badge = document.createElement('div');
+          badge.className = 'heart-badge';
+          badge.id = 'heart-' + ri + '-' + ci;
+          tile.appendChild(badge);
+          if (ri === 0 && ci === 0) {
+            tile.appendChild(document.createTextNode(letter));
+            tile.classList.add('given');
+          } else if (ri > 0) {
+            tile.classList.add('locked');
+          }
+          row.appendChild(tile);
+        });
+        grid.appendChild(row);
+      });
+      markActive();
+    }
+
+    function markActive() {
+      document.querySelectorAll('.tile.active').forEach(t => t.classList.remove('active'));
+      if (!done && currentRow < WORDS.length) {
+        const t = document.getElementById('tile-' + currentRow + '-' + currentCol);
+        if (t) t.classList.add('active');
+      }
+    }
+
+    function buildKeyboard() {
+      const kb = document.getElementById('keyboard');
+      kb.innerHTML = '';
+      KB_ROWS.forEach(keys => {
+        const row = document.createElement('div');
+        row.className = 'kb-row';
+        keys.forEach(k => {
+          const btn = document.createElement('button');
+          btn.id = 'key-' + k;
+          btn.className = 'key';
+          btn.textContent = k;
+          btn.setAttribute('aria-label', 'Letter ' + k);
+          btn.addEventListener('click', () => guess(k));
+          row.appendChild(btn);
+        });
+        kb.appendChild(row);
+      });
+    }
+
+    function resetKeyboard() {
+      triedLetters.clear();
+      document.querySelectorAll('.key.tried').forEach(k => k.classList.remove('tried'));
+    }
+
+    function revealArtTiles() {
+      ART_TILES[3].forEach((ci, i) => {
+        setTimeout(() => {
+          const tile = document.getElementById('tile-3-' + ci);
+          const badge = document.getElementById('heart-3-' + ci);
+          tile.classList.add('art-done');
+          tile.classList.remove('revealed');
+          badge.innerHTML = heartSVG();
+        }, i * 150);
+      });
+    }
+
+    function showEnvelope() {
+      document.getElementById('title-area').style.display = 'none';
+      const wrap = document.getElementById('envelope-wrap');
+      wrap.classList.add('show');
+      document.getElementById('envelope-btn').addEventListener('click', openLetter);
+    }
+
+    function openLetter() {
+      spawnConfetti();
+      document.getElementById('modal').classList.add('show');
+    }
+
+    function guess(letter) {
+      if (done || currentRow >= WORDS.length) return;
+      const target = WORDS[currentRow][currentCol];
+      const tile = document.getElementById('tile-' + currentRow + '-' + currentCol);
+
+      if (letter === target) {
+        tile.childNodes.forEach(n => { if (n.nodeType === 3) n.remove(); });
+        tile.appendChild(document.createTextNode(letter));
+        tile.classList.remove('active');
+        tile.classList.add('revealed', 'pop-in');
+        setTimeout(() => tile.classList.remove('pop-in'), 350);
+
+        resetKeyboard();
+        currentCol++;
+
+        if (currentCol >= WORDS[currentRow].length) {
+          currentRow++;
+          currentCol = 1;
+          if (currentRow < WORDS.length) {
+            setTimeout(() => {
+              const firstTile = document.getElementById('tile-' + currentRow + '-0');
+              firstTile.childNodes.forEach(n => { if (n.nodeType === 3) n.remove(); });
+              firstTile.appendChild(document.createTextNode(WORDS[currentRow][0]));
+              firstTile.classList.remove('locked');
+              firstTile.classList.add('given', 'pop-in');
+              setTimeout(() => firstTile.classList.remove('pop-in'), 350);
+              markActive();
+            }, 350);
+          } else {
+            done = true;
+            setTimeout(() => {
+              revealArtTiles();
+              setTimeout(showEnvelope, 700);
+            }, 300);
+          }
+        } else {
+          markActive();
+        }
+      } else {
+        tile.classList.add('shake');
+        setTimeout(() => tile.classList.remove('shake'), 420);
+        if (!triedLetters.has(letter)) {
+          triedLetters.add(letter);
+          const keyEl = document.getElementById('key-' + letter);
+          if (keyEl) keyEl.classList.add('tried');
+        }
+      }
+    }
+
+    function spawnConfetti() {
+      const container = document.getElementById('confetti-wrap');
+      container.innerHTML = '';
+      const colors = ['#f9a8c9','#fcd34d','#f97316','#e879a8','#c084fc','#60a5fa','#34d399'];
+      for (let i = 0; i < 90; i++) {
+        const el = document.createElement('div');
+        el.className = 'confetti-piece';
+        const size = 8 + Math.random() * 8;
+        el.style.cssText = 'left:' + (Math.random()*100) + '%;top:-20px;width:' + size + 'px;height:' + size + 'px;background:' + colors[Math.floor(Math.random()*colors.length)] + ';border-radius:' + (Math.random()>0.5?'50%':'3px') + ';animation-duration:' + (1.8+Math.random()*2) + 's;animation-delay:' + (Math.random()*1.2) + 's;';
+        container.appendChild(el);
+      }
+    }
+
+    buildGrid();
+    buildKeyboard();
+
+    document.addEventListener('keydown', e => {
+      const k = e.key.toUpperCase();
+      if (/^[A-Z]$/.test(k)) guess(k);
+    });
+  </script>
+</body>
+</html>
