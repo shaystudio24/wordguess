@@ -15,52 +15,15 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       background: #fff9fb;
     }
-    .top-area {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 1.75rem;
-      min-height: 90px;
-    }
-    #title-area {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      text-align: center;
-    }
-    h1.game-title {
-      font-size: 28px;
-      font-weight: 500;
-      color: #b5437a;
-      letter-spacing: 2px;
-      margin-bottom: 0.5rem;
-      text-align: center;
-    }
-    .prompt {
-      font-size: 15px;
-      color: #c27a8e;
-      text-align: center;
-      max-width: 380px;
-      line-height: 1.6;
-    }
-    .envelope-wrap {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      animation: fadeSlideIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
-    }
+    .top-area { width: 100%; display: flex; flex-direction: column; align-items: center; margin-bottom: 1.75rem; min-height: 90px; }
+    #title-area { display: flex; flex-direction: column; align-items: center; width: 100%; text-align: center; }
+    h1.game-title { font-size: 28px; font-weight: 500; color: #b5437a; letter-spacing: 2px; margin-bottom: 0.5rem; text-align: center; }
+    .prompt { font-size: 15px; color: #c27a8e; text-align: center; max-width: 380px; line-height: 1.6; }
+    .envelope-wrap { display: none; flex-direction: column; align-items: center; gap: 8px; animation: fadeSlideIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards; }
     .envelope-wrap.show { display: flex; }
-    @keyframes fadeSlideIn {
-      0%{transform:scale(0.7) translateY(10px);opacity:0} 100%{transform:scale(1) translateY(0);opacity:1}
-    }
+    @keyframes fadeSlideIn { 0%{transform:scale(0.7) translateY(10px);opacity:0} 100%{transform:scale(1) translateY(0);opacity:1} }
     .open-label { font-size: 13px; font-weight: 500; color: #b5437a; letter-spacing: 1px; }
-    .envelope-btn {
-      background: none; border: none; cursor: pointer; padding: 0;
-      display: block; transition: transform 0.15s;
-    }
+    .envelope-btn { background: none; border: none; cursor: pointer; padding: 0; display: block; transition: transform 0.15s; }
     .envelope-btn:hover { transform: scale(1.06); }
     .envelope-btn:active { transform: scale(0.97); }
     .grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 1.75rem; }
@@ -70,8 +33,7 @@
       border: 2px solid #e8b4c8; background: #fff5f8;
       display: flex; align-items: center; justify-content: center;
       font-size: clamp(18px, 5vw, 24px); font-weight: 500; color: #b5437a;
-      transition: border-color 0.2s, background 0.2s;
-      position: relative;
+      transition: border-color 0.2s, background 0.2s; position: relative;
     }
     .tile.locked { background: #eeeceb; border-color: #ccc; color: #ccc; }
     .tile.revealed { background: #f9d0e0; border-color: #d4778f; color: #7a1a3d; }
@@ -79,32 +41,18 @@
     .tile.active { border-color: #c96086; background: #fff0f5; box-shadow: 0 0 0 3px #f5c6d8; }
     .tile.art-done { background: #fce4ef; border: 2.5px dashed #c96086; color: #7a1a3d; }
     .tile.art-done .heart-badge { display: flex; }
-    .heart-badge {
-      display: none; position: absolute;
-      top: -9px; right: -7px;
-      width: 16px; height: 16px;
-      align-items: center; justify-content: center;
-    }
+    .heart-badge { display: none; position: absolute; top: -9px; right: -7px; width: 16px; height: 16px; align-items: center; justify-content: center; }
     .tile.shake { animation: shake 0.4s ease; }
-    @keyframes shake {
-      0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)}
-    }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
     .tile.pop-in { animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1); }
-    @keyframes popIn {
-      0%{transform:scale(0.5);opacity:0.3} 100%{transform:scale(1);opacity:1}
-    }
+    @keyframes popIn { 0%{transform:scale(0.5);opacity:0.3} 100%{transform:scale(1);opacity:1} }
     .heart-pop { animation: heartPop 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards; }
-    @keyframes heartPop {
-      0%{transform:scale(0);opacity:0} 70%{transform:scale(1.3);opacity:1} 100%{transform:scale(1);opacity:1}
-    }
+    @keyframes heartPop { 0%{transform:scale(0);opacity:0} 70%{transform:scale(1.3);opacity:1} 100%{transform:scale(1);opacity:1} }
     .keyboard { display: flex; flex-direction: column; gap: 6px; align-items: center; width: 100%; }
     .kb-row { display: flex; gap: 4px; justify-content: center; width: 100%; }
     .key {
-      width: clamp(28px, 8.5vw, 38px);
-      height: clamp(38px, 11vw, 48px);
-      border-radius: 8px;
-      font-size: clamp(11px, 3.5vw, 15px);
-      font-weight: 500; cursor: pointer;
+      width: clamp(28px, 8.5vw, 38px); height: clamp(38px, 11vw, 48px); border-radius: 8px;
+      font-size: clamp(11px, 3.5vw, 15px); font-weight: 500; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
       user-select: none; transition: transform 0.1s;
       border: 1.5px solid #e2a0ba; background: #fff0f6; color: #b5437a;
@@ -113,40 +61,60 @@
     .key:active { transform: scale(0.96); }
     .key.tried { border: 1.5px solid #999 !important; background: #b0adab !important; color: #4a4745 !important; }
     .key.tried:hover { background: #9e9b99 !important; transform: scale(1.07); }
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(180,40,90,0.18);
-      z-index: 999;
-      align-items: center;
-      justify-content: center;
-    }
+
+    /* Modal */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(180,40,90,0.18); z-index: 999; align-items: center; justify-content: center; overflow-y: auto; padding: 1rem; }
     .modal-overlay.show { display: flex; }
-    .banner-box {
-      background: #fff8fb; border-radius: 24px;
-      padding: 2.5rem 3rem; text-align: center;
-      border: 2px solid #e8a0c0; max-width: 340px;
-      animation: bannerIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
-      position: relative; z-index: 2;
-    }
-    @keyframes bannerIn {
-      0%{transform:scale(0.5) translateY(60px);opacity:0} 100%{transform:scale(1) translateY(0);opacity:1}
-    }
-    .cake-svg { width: 110px; height: 110px; margin: 0 auto 1rem; display: block; }
+    .banner-box { background: #fff8fb; border-radius: 24px; padding: 2rem 2rem; text-align: center; border: 2px solid #e8a0c0; max-width: 340px; width: 100%; animation: bannerIn 0.5s cubic-bezier(0.34,1.56,0.64,1); position: relative; z-index: 2; }
+    @keyframes bannerIn { 0%{transform:scale(0.5) translateY(60px);opacity:0} 100%{transform:scale(1) translateY(0);opacity:1} }
+    .cake-svg { width: 180px; height: 90px; margin: 0 auto 1rem; display: block; }
     .banner-title { font-size: 24px; font-weight: 500; color: #b5437a; margin-bottom: 0.75rem; }
     .banner-sub { font-size: 15px; color: #c27a8e; line-height: 1.8; }
     .banner-sub .heart { color: #e879a8; }
-    .close-btn {
-      margin-top: 1.25rem; padding: 8px 28px; border-radius: 20px;
-      border: 1.5px solid #e8a0c0; background: #fff; color: #b5437a; font-size: 14px; cursor: pointer;
-    }
+
+    /* Gift buttons inside banner */
+    .gift-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 1.25rem 0 0.5rem; }
+    .gift-btn { background: none; border: none; cursor: pointer; padding: 4px; border-radius: 8px; transition: transform 0.15s, opacity 0.3s; }
+    .gift-btn:hover { transform: scale(1.12); }
+    .gift-btn:active { transform: scale(0.95); }
+    .gift-btn.opened { opacity: 0.4; cursor: default; }
+    .gift-btn.opened:hover { transform: none; }
+    .gift-hint { font-size: 12px; color: #c27a8e; margin-bottom: 0; }
+
+    /* Gift cards (inline below) */
+    .gift-card { display: none; background: #fff0f6; border-radius: 16px; padding: 1.25rem; text-align: center; border: 1.5px solid #e8a0c0; margin-top: 12px; animation: popUp 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+    .gift-card.show { display: block; }
+    @keyframes popUp { 0%{transform:scale(0.85) translateY(10px);opacity:0} 100%{transform:scale(1) translateY(0);opacity:1} }
+    .gift-emoji { font-size: 36px; margin-bottom: 0.5rem; }
+    .gift-label { font-size: 10px; font-weight: 700; color: #c27a8e; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 0.3rem; }
+    .gift-text { font-size: 15px; font-weight: 500; color: #b5437a; line-height: 1.5; margin-bottom: 1rem; }
+    .choices { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1rem; }
+    .choice-btn { padding: 10px 12px; border-radius: 10px; border: 2px solid #e8a0c0; background: #fff; color: #b5437a; font-size: 13px; font-weight: 500; cursor: pointer; transition: background 0.15s, transform 0.1s; text-align: left; line-height: 1.4; }
+    .choice-btn:hover { background: #fad4e5; transform: scale(1.02); }
+    .choice-btn.selected { background: #f7b8d0; border-color: #c96086; color: #7a1a3d; }
+    .choice-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; color: #c96086; display: block; margin-bottom: 2px; }
+    .confirmed-text { display: none; font-size: 14px; color: #b5437a; font-weight: 500; margin-bottom: 1rem; line-height: 1.5; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:none} }
+    .action-btn { padding: 7px 22px; border-radius: 20px; border: 1.5px solid #e8a0c0; background: #fff; color: #b5437a; font-size: 13px; cursor: pointer; }
+    .action-btn:hover { background: #fad4e5; }
+
+    /* Summary card */
+    .summary-card { display: none; background: #fff0f6; border-radius: 16px; padding: 1.25rem; text-align: center; border: 1.5px solid #e8a0c0; margin-top: 12px; animation: popUp 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+    .summary-card.show { display: block; }
+    .summary-title { font-size: 16px; font-weight: 600; color: #b5437a; margin-bottom: 1rem; }
+    .summary-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1rem; }
+    .summary-item { background: #fce4ef; border-radius: 10px; padding: 10px 12px; text-align: left; border: 1.5px solid #e8a0c0; display: flex; align-items: flex-start; gap: 10px; }
+    .summary-icon { font-size: 18px; flex-shrink: 0; }
+    .summary-text { font-size: 13px; color: #7a1a3d; line-height: 1.4; font-weight: 500; }
+    .summary-item-label { font-size: 10px; color: #c27a8e; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 2px; }
+    .screenshot-note { background: #fff; border-radius: 10px; padding: 10px 12px; margin-bottom: 1rem; border: 1.5px dashed #e8a0c0; font-size: 13px; color: #c27a8e; line-height: 1.6; }
+    .screenshot-note strong { color: #b5437a; }
+
+    .close-btn { margin-top: 1.25rem; padding: 8px 28px; border-radius: 20px; border: 1.5px solid #e8a0c0; background: #fff; color: #b5437a; font-size: 14px; cursor: pointer; }
     .close-btn:hover { background: #fad4e5; }
     .confetti-wrap { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 1000; }
     .confetti-piece { position: absolute; opacity: 0; animation: fall linear forwards; }
-    @keyframes fall {
-      0%{transform:translateY(-20px) rotate(0deg);opacity:1} 100%{transform:translateY(110vh) rotate(720deg);opacity:0.2}
-    }
+    @keyframes fall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1} 100%{transform:translateY(110vh) rotate(720deg);opacity:0.2} }
   </style>
 </head>
 <body>
@@ -176,28 +144,114 @@
 
   <div class="modal-overlay" id="modal">
     <div class="banner-box">
-      <svg class="cake-svg" viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
-        <rect x="15" y="62" width="80" height="34" rx="8" fill="#f9a8c9"/>
-        <rect x="20" y="50" width="70" height="18" rx="7" fill="#f7c5d8"/>
-        <rect x="26" y="40" width="58" height="14" rx="6" fill="#f9d0e2"/>
-        <ellipse cx="35" cy="62" rx="10" ry="5" fill="#fff0f6"/>
-        <ellipse cx="55" cy="62" rx="10" ry="5" fill="#ffd6ea"/>
-        <ellipse cx="75" cy="62" rx="10" ry="5" fill="#fff0f6"/>
-        <rect x="34" y="34" width="4" height="10" rx="2" fill="#fcd34d"/>
-        <rect x="53" y="34" width="4" height="10" rx="2" fill="#fcd34d"/>
-        <rect x="72" y="34" width="4" height="10" rx="2" fill="#fcd34d"/>
-        <ellipse cx="36" cy="32" rx="3" ry="5" fill="#f97316" opacity="0.85"/>
-        <ellipse cx="55" cy="32" rx="3" ry="5" fill="#f97316" opacity="0.85"/>
-        <ellipse cx="74" cy="32" rx="3" ry="5" fill="#f97316" opacity="0.85"/>
-        <path d="M25 68 Q30 64 35 68 Q40 72 45 68 Q50 64 55 68 Q60 72 65 68 Q70 64 75 68 Q80 72 85 68" stroke="#fff" stroke-width="2" fill="none" opacity="0.7"/>
-        <text x="55" y="84" text-anchor="middle" font-size="11" fill="#b5437a" font-weight="500">Happy Birthday</text>
+      <!-- Cake + gifts SVG -->
+      <svg class="cake-svg" viewBox="0 0 220 110" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="46" width="46" height="40" rx="5" fill="#f9a8c9"/>
+        <rect x="2" y="38" width="46" height="12" rx="4" fill="#f7c5d8"/>
+        <rect x="20" y="38" width="10" height="48" fill="#e879a8" opacity="0.4"/>
+        <path d="M25 38 C25 38 16 32 14 27 C12 22 17 20 20 24 C23 28 25 38 25 38Z" fill="#e879a8"/>
+        <path d="M25 38 C25 38 34 32 36 27 C38 22 33 20 30 24 C27 28 25 38 25 38Z" fill="#e879a8"/>
+        <rect x="70" y="62" width="80" height="34" rx="8" fill="#f9a8c9"/>
+        <rect x="75" y="50" width="70" height="18" rx="7" fill="#f7c5d8"/>
+        <rect x="81" y="40" width="58" height="14" rx="6" fill="#f9d0e2"/>
+        <ellipse cx="90" cy="62" rx="10" ry="5" fill="#fff0f6"/>
+        <ellipse cx="110" cy="62" rx="10" ry="5" fill="#ffd6ea"/>
+        <ellipse cx="130" cy="62" rx="10" ry="5" fill="#fff0f6"/>
+        <rect x="89" y="34" width="4" height="10" rx="2" fill="#fcd34d"/>
+        <rect x="108" y="34" width="4" height="10" rx="2" fill="#fcd34d"/>
+        <rect x="127" y="34" width="4" height="10" rx="2" fill="#fcd34d"/>
+        <ellipse cx="91" cy="32" rx="3" ry="5" fill="#f97316" opacity="0.85"/>
+        <ellipse cx="110" cy="32" rx="3" ry="5" fill="#f97316" opacity="0.85"/>
+        <ellipse cx="129" cy="32" rx="3" ry="5" fill="#f97316" opacity="0.85"/>
+        <path d="M80 68 Q85 64 90 68 Q95 72 100 68 Q105 64 110 68 Q115 72 120 68 Q125 64 130 68 Q135 72 140 68" stroke="#fff" stroke-width="2" fill="none" opacity="0.7"/>
+        <rect x="172" y="46" width="46" height="40" rx="5" fill="#f9a8c9"/>
+        <rect x="172" y="38" width="46" height="12" rx="4" fill="#f7c5d8"/>
+        <rect x="190" y="38" width="10" height="48" fill="#e879a8" opacity="0.4"/>
+        <path d="M195 38 C195 38 186 32 184 27 C182 22 187 20 190 24 C193 28 195 38 195 38Z" fill="#e879a8"/>
+        <path d="M195 38 C195 38 204 32 206 27 C208 22 203 20 200 24 C197 28 195 38 195 38Z" fill="#e879a8"/>
       </svg>
+
       <div class="banner-title">Happy Birthday,<br>Baby Tood Tood</div>
       <div class="banner-sub">
         Hope your day is as wonderful<br>
         as you are.<br><br>
         Love you naka <span class="heart">&#10084;</span>
       </div>
+
+      <!-- Clickable gift buttons -->
+      <div class="gift-row">
+        <button class="gift-btn" id="gift-left" onclick="openGift('left')" aria-label="Open left gift">
+          <svg width="54" height="68" viewBox="0 0 54 70" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="26" width="46" height="40" rx="5" fill="#f9a8c9"/>
+            <rect x="4" y="20" width="46" height="12" rx="4" fill="#f7c5d8"/>
+            <rect x="22" y="20" width="10" height="46" fill="#e879a8" opacity="0.4"/>
+            <path d="M27 20 C27 20 18 14 16 10 C14 6 18 4 21 7 C24 10 27 20 27 20Z" fill="#e879a8"/>
+            <path d="M27 20 C27 20 36 14 38 10 C40 6 36 4 33 7 C30 10 27 20 27 20Z" fill="#e879a8"/>
+          </svg>
+        </button>
+        <p class="gift-hint">tap a gift! 🎁</p>
+        <button class="gift-btn" id="gift-right" onclick="openGift('right')" aria-label="Open right gift">
+          <svg width="54" height="68" viewBox="0 0 54 70" xmlns="http://www.w3.org/2000/svg">
+            <rect x="4" y="26" width="46" height="40" rx="5" fill="#f9a8c9"/>
+            <rect x="4" y="20" width="46" height="12" rx="4" fill="#f7c5d8"/>
+            <rect x="22" y="20" width="10" height="46" fill="#e879a8" opacity="0.4"/>
+            <path d="M27 20 C27 20 18 14 16 10 C14 6 18 4 21 7 C24 10 27 20 27 20Z" fill="#e879a8"/>
+            <path d="M27 20 C27 20 36 14 38 10 C40 6 36 4 33 7 C30 10 27 20 27 20Z" fill="#e879a8"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Left gift card -->
+      <div class="gift-card" id="card-left">
+        <div class="gift-emoji">🧘‍♀️</div>
+        <div class="gift-label">Gift 1</div>
+        <div class="gift-text">1 Month of unlimited yoga<br>@ Ashira Yoga</div>
+        <button class="action-btn" onclick="confirmGift('left')">Yay! 🎉</button>
+      </div>
+
+      <!-- Right gift card -->
+      <div class="gift-card" id="card-right">
+        <div class="gift-emoji">🎁</div>
+        <div class="gift-label">Gift 2 — You choose!</div>
+        <div class="gift-text">Please choose your second gift</div>
+        <div class="choices" id="choices">
+          <button class="choice-btn" onclick="pickChoice('A')">
+            <span class="choice-label">OPTION A</span>
+            Portable screen
+          </button>
+          <button class="choice-btn" onclick="pickChoice('B')">
+            <span class="choice-label">OPTION B</span>
+            Coupon for 2hr massage + 2 teenoi
+          </button>
+        </div>
+        <div class="confirmed-text" id="confirmed-text"></div>
+        <button class="action-btn" id="done-btn" style="display:none" onclick="confirmGift('right')">Done! 🩷</button>
+      </div>
+
+      <!-- Summary card -->
+      <div class="summary-card" id="card-summary">
+        <div class="summary-title">Your Birthday Gifts 🎉</div>
+        <div class="summary-list">
+          <div class="summary-item">
+            <span class="summary-icon">🧘‍♀️</span>
+            <div class="summary-text">
+              <span class="summary-item-label">Gift 1</span>
+              1 Month of unlimited yoga @ Ashira Yoga
+            </div>
+          </div>
+          <div class="summary-item">
+            <span class="summary-icon">🎁</span>
+            <div class="summary-text" id="summary-gift2">
+              <span class="summary-item-label">Gift 2</span>
+              —
+            </div>
+          </div>
+        </div>
+        <div class="screenshot-note">
+          📸 <strong>Screenshot this page</strong> and send it to <strong>Mimi</strong> to redeem your gifts! 🩷
+        </div>
+      </div>
+
       <button class="close-btn" onclick="document.getElementById('modal').classList.remove('show')">Close</button>
     </div>
   </div>
@@ -215,6 +269,9 @@
     let currentCol = 1;
     let done = false;
     let triedLetters = new Set();
+    let leftDone = false;
+    let rightDone = false;
+    let chosenGift = '';
 
     function isArtTile(ri, ci) {
       return ART_TILES[ri] && ART_TILES[ri].includes(ci);
@@ -307,21 +364,69 @@
       document.getElementById('modal').classList.add('show');
     }
 
+    function openGift(side) {
+      const card = document.getElementById('card-' + side);
+      const btn = document.getElementById('gift-' + side);
+      if (btn.classList.contains('opened')) return;
+      card.classList.add('show');
+      btn.classList.add('opened');
+      setTimeout(() => card.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+    }
+
+    function confirmGift(side) {
+      if (side === 'left') {
+        leftDone = true;
+        document.getElementById('card-left').style.opacity = '0.65';
+      } else {
+        rightDone = true;
+        document.getElementById('card-right').style.opacity = '0.65';
+      }
+      checkBothGifts();
+    }
+
+    function checkBothGifts() {
+      if (leftDone && rightDone) {
+        const g2 = chosenGift === 'A' ? 'Portable screen' : 'Coupon for 2hr massage + 2 teenoi';
+        document.getElementById('summary-gift2').innerHTML =
+          '<span class="summary-item-label">Gift 2</span>' + g2;
+        setTimeout(() => {
+          const s = document.getElementById('card-summary');
+          s.classList.add('show');
+          setTimeout(() => s.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+        }, 400);
+      }
+    }
+
+    function pickChoice(opt) {
+      chosenGift = opt;
+      document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+      const btns = document.querySelectorAll('.choice-btn');
+      if (opt === 'A') btns[0].classList.add('selected');
+      else btns[1].classList.add('selected');
+      setTimeout(() => {
+        document.getElementById('choices').style.display = 'none';
+        const msg = opt === 'A'
+          ? '🖥️ Portable screen it is!<br>So excited to get this for you 🩷'
+          : '💆‍♀️ 2hr massage + 2 teenoi!<br>Time to relax together 🩷';
+        const ct = document.getElementById('confirmed-text');
+        ct.innerHTML = msg;
+        ct.style.display = 'block';
+        document.getElementById('done-btn').style.display = 'inline-block';
+      }, 350);
+    }
+
     function guess(letter) {
       if (done || currentRow >= WORDS.length) return;
       const target = WORDS[currentRow][currentCol];
       const tile = document.getElementById('tile-' + currentRow + '-' + currentCol);
-
       if (letter === target) {
         tile.childNodes.forEach(n => { if (n.nodeType === 3) n.remove(); });
         tile.appendChild(document.createTextNode(letter));
         tile.classList.remove('active');
         tile.classList.add('revealed', 'pop-in');
         setTimeout(() => tile.classList.remove('pop-in'), 350);
-
         resetKeyboard();
         currentCol++;
-
         if (currentCol >= WORDS[currentRow].length) {
           currentRow++;
           currentCol = 1;
